@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "tsBuildInfoFile": "tsconfig.spec.tsbuildinfo",
+    "paths": {
+      "~~*": ["../../*"]
+    }
+  },
+  "include": [
+    "jest.config.ts",
+    "e2e/**/*.ts",
+    "src/**/*.spec.ts",
+    "**/test.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

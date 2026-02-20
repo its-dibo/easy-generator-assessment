@@ -1,0 +1,74 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "prepare the workspace",
+      "dependsOn": ["install dependencies", "install global dependencies"],
+      "dependsOrder": "parallel",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "revealProblems": "onProblem"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "pull",
+      "group": "build",
+      "type": "shell",
+      "command": "git pull",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "revealProblems": "onProblem",
+        "group": "prepare"
+      }
+    },
+    {
+      "label": "install pnpm",
+      "group": "build",
+      "type": "shell",
+      "command": "corepack enable && corepack prepare --activate && pnpm setup",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "revealProblems": "onProblem",
+        "group": "prepare"
+      }
+    },
+    {
+      "label": "install dependencies",
+      "group": "build",
+      "type": "shell",
+      "command": "pnpm install",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "revealProblems": "onProblem",
+        "group": "prepare"
+      },
+      "dependsOn": ["pull", "install pnpm"]
+    },
+    {
+      "label": "install global dependencies",
+      "group": "build",
+      "type": "shell",
+      "command": "pnpm add -g nx @nestjs/cli",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "revealProblems": "onProblem",
+        "group": "prepare"
+      },
+      "dependsOn": ["install pnpm"]
+    }
+  ],
+  "presentation": {
+    "reveal": "always",
+    "panel": "dedicated",
+    "revealProblems": "onProblem"
+  }
+}

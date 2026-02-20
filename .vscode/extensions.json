@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "anseki.vscode-color",
+    "hookyqr.jsdoctagcomplete",
+    "donjayamanne.githistory",
+    "aljazsim.tsce",
+    "cybai.yaml-key-viewer",
+    "ms-azuretools.vscode-docker",
+    "dskwrk.vscode-generate-getter-setter",
+    "eamodio.gitlens",
+    "markwylde.vscode-filesize",
+    "github.vscode-github-actions",
+    "pkief.material-icon-theme",
+    "ashinzekene.nestjs",
+    "toba.vsfire",
+    "pflannery.vscode-versionlens",
+    "redhat.vscode-yaml",
+    "typescriptteam.native-preview",
+    "esbenp.prettier-vscode"
+  ]
+}

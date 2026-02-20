@@ -1,0 +1,20 @@
+{
+  "entryPoints": ["apps/*", "libs/*"],
+  "out": "docs",
+  "entryPointStrategy": "packages",
+  "exclude": ["**/*.spec.ts", "**/node_modules/**", "**/dist/**"],
+  "includeVersion": true,
+  "hideGenerator": true,
+  "pretty": true,
+  "sourceLinkExternal": true,
+  "packageOptions": {
+    "gitRevision": "main"
+  },
+  "logLevel": "Error",
+  // additional links in the header
+  "navigationLinks": {
+    "Website": "https://easy-generator.com",
+    "Repo": "https://github.com/its-dibo/easy-generator.git"
+  },
+  "plugin": ["@shipgirl/typedoc-plugin-versions"]
+}

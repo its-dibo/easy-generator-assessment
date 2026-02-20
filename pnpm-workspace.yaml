@@ -1,0 +1,6 @@
+packages:
+  - "apps/**"
+  - "libs/**"
+  - "!**/dist"
+
+linkWorkspacePackages: deep

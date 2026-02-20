@@ -1,0 +1,103 @@
+{
+  "name": "easy-generator-assessment",
+  "description": "Generate Courses",
+  "version": "0.0.0-development",
+  "type": "module",
+  "workspaces": [
+    "apps/**/*",
+    "libs/**/*",
+    "!**/dist"
+  ],
+  "private": true,
+  "engines": {
+    "node": "^18.19.1 || ^20.11.1 || >=22.0.0"
+  },
+  "packageManager": "pnpm@10.30.0",
+  "scripts": {
+    "prepare": "husky || true",
+    "lint": "eslint --fix --config=eslint.config.ts --quiet --cache --concurrency=auto",
+    "format": "prettier --write --ignore-path=.gitignore --ignore-path=.prettierignore --ignore-unknown",
+    "format:all": "pnpm lint:prettier .",
+    "test": "pnpm tsx node_modules/jest/bin/jest.js --coverage",
+    "test:changed": "pnpm run test --only-changed --no-coverage",
+    "test:fails": "pnpm run test --only-failures --no-coverage",
+    "test:unit": "pnpm run test --testMatch '**/*.spec.ts' --testMatch '!**/*.e2e.spec.ts'",
+    "test:e2e": "pnpm run test --testMatch '**/*.e2e.spec.ts'",
+    "test:report": "http-server coverage/lcov-report",
+    "build": "pnpm nx run-many -t build",
+    "build:clean": "pnpm clean && pnpm build",
+    "build:libs": "pnpm run build -w libs",
+    "update-all": "npm-check-updates",
+    "postupdate-all": "pnpm install && pnpm audit --fix && pnpm build:clean &&  pnpm t",
+    "update-all:minor": "pnpm run update-all -- --target minor",
+    "reinstall": "pnpm remove-lock && shx rm -fr **/node_modules && pnpm install && pnpm audit --fix",
+    "reinstall:no-cache": "pnpm store prune && pnpm cache delete && pnpm run reinstall",
+    "remove-lock": "shx rm -f pnpm-lock.yaml && shx rm -f yarn.lock && shx rm -f package-lock.json",
+    "docs": "pnpm run docs:generate && pnpm run docs:serve",
+    "docs:generate": "typedoc",
+    "docs:serve": "http-server docs",
+    "reset": "nx reset",
+    "clean": "shx rm -rf **/dist || true &&  shx rm -rf **/.angular || true && shx rm **/*.tsbuildinfo || true && nx reset",
+    "release": "nx release --first-release --verbose",
+    "release:libs": "pnpm release --groups=libs",
+    "release:apps": "pnpm release --groups=apps",
+    "publish": "nx release publish",
+    "publish:libs": "pnpm publish --groups=libs",
+    "publish:apps": "pnpm publish --groups=apps"
+  },
+  "lint-staged": {
+    "*": [
+      "pnpm lint"
+    ]
+  },
+  "keywords": [
+    "courses",
+    "easy generator",
+    "learning",
+    "education"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
+    "@commitlint/types": "^20.4.0",
+    "@impactor/eslint-config": "^2.0.2",
+    "@impactor/nodejs": "^3.0.4",
+    "@impactor/nx-manager": "^2.0.4",
+    "@jest/globals": "30.2.0",
+    "@jest/types": "^30.2.0",
+    "@nx/devkit": "22.5.0",
+    "@nx/jest": "22.5.0",
+    "@nx/js": "22.5.0",
+    "@nx/plugin": "22.5.0",
+    "@types/node": "^25.2.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.39.2",
+    "husky": "^9.1.7",
+    "jest": "30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "jest-util": "~30.2.0",
+    "lint-staged": "^16.2.6",
+    "npm-check-updates": "^19.1.2",
+    "nx": "22.5.0",
+    "prettier": "^3.8.1",
+    "shx": "^0.4.0",
+    "ts-jest": "29.4.6",
+    "ts-loader": "^9.5.4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typedoc": "^0.28.16",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/its-dibo/easy-generator.git"
+  },
+  "homepage": "https://github.com/its-dibo/easy-generator#readme",
+  "bugs": {
+    "url": "https://github.com/its-dibo/easy-generator/issues",
+    "email": "sh.eldeeb.2010+easy-generator@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Sherif Eldeeb <sh.eldeeb.2010+github@gmail.com> (https://github.com/its-dibo)",
+  "contributors": []
+}

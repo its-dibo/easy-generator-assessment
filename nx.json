@@ -1,0 +1,150 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "executor": "@impactor/nx-manager:universal-builder",
+      "dependsOn": ["typecheck", "prebuild", "^build"],
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "outputs": ["{projectRoot}/dist"],
+      "options": {
+        "postBuild": ["default", "{workspaceRoot}/tasks/post-build.ts"]
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build", "preserve"],
+      "continuous": true,
+      "options": {
+        "cwd": "{projectRoot}",
+        "command": "NODE_ENV=development pnpm tsx --env-file-if-exists=.env --env-file-if-exists=.env.local dist/main.js"
+      },
+      "configurations": {
+        "production": {
+          "command": "NODE_ENV=production pnpm tsx --env-file-if-exists=.env --env-file-if-exists=.env.local --env-file-if-exists=.env.production --env-file-if-exists=.env.production.local dist/main.js"
+        }
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "{projectRoot}/dist"
+      }
+    },
+    "test": {
+      "inputs": ["test"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "dependsOn": ["^build", "pretest"],
+      "configurations": {
+        "unit": {
+          "args": [
+            "--testPathIgnorePatterns '.*\\.e2e\\.spec\\.ts$'",
+            "--testPathIgnorePatterns '/.*-e2e/'",
+            "--testPathIgnorePatterns '/.*-e2e/'"
+          ]
+        },
+        "e2e": {
+          "args": [
+            "--testMatch '**/*-e2e/**/*.{spec,test}.[mc]?[jt]s?(x)'",
+            "--testMatch '**/e2e/**/*.{spec,test}.[mc]?[jt]s?(x)'",
+            "--testMatch  '**/*.e2e.(spec|test).?([mc])[jt]s?(x)'"
+          ]
+        }
+      }
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
+    }
+  },
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/src/**/*",
+      "!{projectRoot}/**/*.(spec|test)(.e2e)?.[tj]sx?",
+      "!{projectRoot}/**/e2e/**/*",
+      "{projectRoot}/.env(.*)?",
+      "{workspaceRoot}/tasks/(post-)?build.ts",
+      "{projectRoot}/(project|package|tsconfig)(.+)?.json",
+      "{workspaceRoot}/tsconfig.base.json",
+      {
+        "runtime": "node --version"
+      },
+      {
+        "env": "NODE_ENV"
+      }
+    ],
+    "test": [
+      "default",
+      "{projectRoot}/tsconfig.spec.json",
+      "{projectRoot}/jest.config.[jt]s",
+      "{workspaceRoot}/jest.config.[jt]s",
+      "{projectRoot}/**/*.(spec|test)(.e2e)?.[jt]sx?",
+      "{projectRoot}/**/e2e/**/*.[jt]sx?",
+      {
+        "externalDependencies": ["jest"]
+      }
+    ]
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": false
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test",
+        "ciTargetName": "test-ci"
+      }
+    }
+  ],
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "useDaemonProcess": false
+      }
+    }
+  },
+  "release": {
+    "groups": {
+      "libs": {
+        "projects": ["libs/*"]
+      },
+      "apps": {
+        "projects": ["apps/*"],
+        "changelog": {
+          "projectChangelogs": {
+            "createRelease": "github"
+          }
+        }
+      }
+    },
+    "projectsRelationship": "independent",
+    "version": {
+      "conventionalCommits": true,
+      "updateDependents": "always",
+      "preVersionCommand": "pnpm nx run-many -t build",
+      "manifestRootsToUpdate": [
+        "{projectRoot}",
+        {
+          "path": "{projectRoot}/dist",
+          "preserveLocalDependencyProtocols": false
+        }
+      ]
+    },
+    "releaseTag": {
+      "pattern": "{projectName}@{version}"
+    },
+    "changelog": {
+      "projectChangelogs": true
+    }
+  },
+  "sync": {
+    "applyChanges": false
+  }
+}

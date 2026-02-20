@@ -1,0 +1,42 @@
+services:
+  db:
+    container_name: db
+    image: postgis/postgis:17-3.5-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker-scripts/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: postgres -c "listen_addresses=*"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_HOST_AUTH_METHOD: md5
+    ports:
+      - 5400:5432
+    networks:
+      - dibo-network
+
+  pgAdmin:
+    container_name: pgAdmin
+    image: dpage/pgadmin4:2025-05-27-1
+    restart: unless-stopped
+    ports:
+      - "5040:5050"
+    environment:
+      PGADMIN_LISTEN_PORT: 5050
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./docker-scripts/pg-admin/servers.json:/pgadmin4/servers.json
+    networks:
+      - dibo-network
+
+volumes:
+  postgres-data:
+  edu-postgres-data:
+  edu-pgadmin-data:
+
+networks:
+  dibo-network:
+    driver: bridge

@@ -31,7 +31,7 @@
       "label": "install pnpm",
       "group": "build",
       "type": "shell",
-      "command": "corepack enable && corepack prepare --activate && pnpm setup",
+      "command": "corepack enable && corepack prepare --activate && pnpm setup || true",
       "presentation": {
         "reveal": "silent",
         "panel": "dedicated",

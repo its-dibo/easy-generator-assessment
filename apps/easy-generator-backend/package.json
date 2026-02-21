@@ -5,6 +5,8 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "build": "nest build",
+    "postbuild": "cp package.json .env dist/",
     "preserve": "kill-port ${PORT:-3000} || true"
   },
   "nx": {
@@ -17,11 +19,10 @@
   "imports": {
     "#*": "./*"
   },
-  "types": "./index.d.ts",
-  "main": "./index.js",
   "dependencies": {
-    "@impactor/nest": "workspace:^",
-    "@impactor/nodejs": "workspace:^",
+    "@fastify/static": "^9.0.0",
+    "@impactor/nest": "5.0.0",
+    "@impactor/nodejs": "3.0.4",
     "@nestjs/common": "^11.1.13",
     "@nestjs/core": "^11.1.13",
     "@nestjs/jwt": "^11.0.2",
@@ -39,6 +40,7 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "ts-fsrs": "^5.2.3",
+    "tslib": "^2.8.1",
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
@@ -55,6 +57,7 @@
     "@types/passport-local": "^1.0.38",
     "@types/supertest": "^6.0.3",
     "jest": "^30.2.0",
+    "kill-port": "^2.0.1",
     "source-map-support": "^0.5.21",
     "supertest": "^7.2.2",
     "typescript": "^5.7.3"

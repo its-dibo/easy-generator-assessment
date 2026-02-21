@@ -34,8 +34,7 @@ services:
 
 volumes:
   postgres-data:
-  edu-postgres-data:
-  edu-pgadmin-data:
+  pgadmin-data:
 
 networks:
   dibo-network:

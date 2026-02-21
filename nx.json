@@ -13,15 +13,15 @@
     },
     "serve": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build", "preserve"],
+      "dependsOn": ["build", "preserve", "typecheck"],
       "continuous": true,
       "options": {
         "cwd": "{projectRoot}",
-        "command": "NODE_ENV=development pnpm tsx --env-file-if-exists=.env --env-file-if-exists=.env.local dist/main.js"
+        "command": "NODE_ENV=development node --env-file-if-exists=.env --env-file-if-exists=.env.local dist/main.js"
       },
       "configurations": {
         "production": {
-          "command": "NODE_ENV=production pnpm tsx --env-file-if-exists=.env --env-file-if-exists=.env.local --env-file-if-exists=.env.production --env-file-if-exists=.env.production.local dist/main.js"
+          "command": "NODE_ENV=production node --env-file-if-exists=.env --env-file-if-exists=.env.local --env-file-if-exists=.env.production --env-file-if-exists=.env.production.local dist/main.js"
         }
       }
     },

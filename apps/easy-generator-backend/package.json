@@ -7,7 +7,7 @@
   "scripts": {
     "build": "nest build",
     "postbuild": "cp package.json .env dist/",
-    "preserve": "kill-port ${PORT:-3000} || true"
+    "preserve": "kill-port ${PORT:-5000} || true"
   },
   "nx": {
     "projectType": "application",

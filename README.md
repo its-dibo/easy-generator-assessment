@@ -67,3 +67,15 @@ We use jest for running unit testing, to start the unit testing run one of the f
 - `pnpm test:e2e`: run e2e tests only
 - `pnpm test:changed`: only test the files affected by last changes
 - `pnpm test:failed`: only re-run the last failed tests
+
+## Demo
+
+<img src="./assets/demo/1- home.png">
+<img src="./assets/demo/2- register.png">
+<img src="./assets/demo/3- register with data.png">
+<img src="./assets/demo/4- login.png">
+<img src="./assets/demo/5- logedin user.png">
+
+### Videos:
+
+<video src="./assets/demo/demo.mp4">

@@ -32,6 +32,24 @@ services:
     networks:
       - dibo-network
 
+  easy-generator-backend:
+    container_name: easy-generator-backend
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile.apps
+      args:
+        - APP_NAME=@easy-generator/backend
+        - DOCKER_BUILDKIT=1
+    env_file:
+      - apps/easy-generator-backend/.env
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - dibo-network
+
 volumes:
   postgres-data:
   pgadmin-data:

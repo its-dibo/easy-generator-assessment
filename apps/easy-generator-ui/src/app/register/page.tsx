@@ -47,7 +47,7 @@ export default function RegisterPage() {
 
       const data = await res.json();
       // todo: use http-only cookies
-      localStorage.setItem("auth_token", data.auth_token);
+      localStorage.setItem("user", JSON.stringify(data));
       setStatus("success");
       router.push("/");
     } catch (err) {

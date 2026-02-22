@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IUserInfo } from "#types/user-info";
+import { FaUser } from "react-icons/fa6";
 
 export default function RegisterPage() {
   useEffect(() => {
@@ -70,7 +71,7 @@ export default function RegisterPage() {
           const formData = new FormData(e.currentTarget);
           loginUser(formData);
         }}
-        className="w-full max-w-md space-y-4 rounded-lg border p-6 shadow bg-black text-white"
+        className="w-full max-w-md space-y-4 rounded-lg border px-6 py-12 shadow bg-black text-white"
       >
         <h1 className="text-2xl font-bold text-center">Login</h1>
 
@@ -93,10 +94,15 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded p-2 text-white disabled:opacity-50 bg-stone-700"
+          className="disabled:opacity-50 rounded p-2 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground  text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] "
         >
+          <FaUser className="text-blue-500" />
           {loading ? "Wait..." : "Login"}
         </button>
+
+        <p className="text-gray-500 hover:text-white text-center">
+          or <a href="/register">create account</a>
+        </p>
 
         {status === "success" && (
           <p className="text-green-600 text-center">

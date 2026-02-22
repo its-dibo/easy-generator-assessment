@@ -46,8 +46,11 @@ export class AuthService {
   async register(data: UserEntity) {
     let user = await this.usersService.post(data),
       auth_token = await this.sign(user);
+
+    let { password, ...res } = user;
+
     return {
-      ...user,
+      ...res,
       auth_token,
     };
   }

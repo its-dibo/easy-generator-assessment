@@ -1,15 +1,28 @@
 "use client";
 
-// todo: prevent navigating to this page if the user already logged-in
 // todo: improve form style
 // todo: improve validations
 // todo: set apiBaseUrl in a config file
 // todo: send error logs to the cloud
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { IUserInfo } from "#types/user-info";
 
 export default function RegisterPage() {
+  // prevent navigating to this page if the user already logged-in
+  useEffect(() => {
+    const store = localStorage.getItem("user");
+
+    if (store) {
+      try {
+        let user: IUserInfo = JSON.parse(store);
+        if (user.access_token) {
+          router.push("/");
+        }
+      } catch {}
+    }
+  }, []);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<null | "success" | "error">(null);

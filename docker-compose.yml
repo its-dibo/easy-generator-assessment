@@ -40,10 +40,24 @@ services:
       context: .
       dockerfile: Dockerfile.apps
       args:
-        - APP_NAME=@easy-generator/backend
-        - DOCKER_BUILDKIT=1
+        - APP_NAME=easy-generator-backend
     env_file:
       - apps/easy-generator-backend/.env
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    networks:
+      - dibo-network
+
+  easy-generator-ui:
+    container_name: easy-generator-ui
+    depends_on:
+      - easy-generator-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.apps
+      args:
+        - APP_NAME=easy-generator-ui
     restart: unless-stopped
     ports:
       - 3000:3000

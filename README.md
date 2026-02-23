@@ -33,9 +33,9 @@ please refer to the guide for each app separately.
 
 First, be sure Docker is installed in your machine by running `docker -v`.
 
-from the project's root run `docker compose -f 'docker-compose.yml' up -d --build 'easy-generator-backend'`, which automatically setup the database and launches the backend and frontend for you.
+from the project's root run `docker compose -f 'docker-compose.yml' up -d --build 'easy-generator-ui'`, which automatically setup the database and launches the backend and frontend for you.
 
-Navigate to `http://localhost:4200` for UI and `http://localhost:3000` for API.
+Navigate to `http://localhost:3000` for UI and `http://localhost:5000` for API.
 
 > You can change the desired ports in `.env`.
 
@@ -47,7 +47,7 @@ You'll need to setup a database before launching the app, you can either use the
 
 in case of manual setup, you may need to change the db credentials in the .env file.
 
-Start the backend by running `nx serve @easy-generator/backend` and the same for UI.
+Start the backend by running `pnpm start:be` and `pnpm start:ui`.
 
 The project uses incremential builds and caching mechanisms to speed up the building phases while developing,
 if you faced any issues, try cleaning the caches and resetting the daemon by running `pnpm clean`

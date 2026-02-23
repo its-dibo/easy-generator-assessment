@@ -15,41 +15,21 @@ ENV NODE_ENV=production
 WORKDIR $ROOT
 
 COPY package.json pnpm-*.yaml package-lock.json* yarn.lock* ./
-COPY apps/easy-generator-backend/package.json apps/easy-generator-backend/
-
+COPY apps/${APP_NAME}/package.json apps/${APP_NAME}/
 
 RUN corepack enable
 RUN corepack prepare --activate 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod=false 
+RUN pnpm add -g @nestjs/cli 
 
 COPY . .
-
-RUN pnpm add -g @nestjs/cli 
-RUN --mount=type=cache,target=$ROOT/.nx pnpm nx build $APP_NAME --verbose
-RUN pnpm deploy --filter=$APP_NAME --legacy  $APP_DIR/pnpm_deploy
-
-
-# Stage 2: Serving apps
-FROM $BASE AS serve
-ARG ROOT
-ARG APP_NAME
-ARG APP_DIR
-ARG COREPACK_ENABLE_DOWNLOAD_PROMPT
-ENV PORT=3000
-ENV NODE_ENV=production
-WORKDIR $APP_DIR
-
-# copy app artifacts
-COPY --from=build $APP_DIR/pnpm_deploy/dist .
-COPY --from=build $APP_DIR/pnpm_deploy/node_modules ./node_modules
-
-RUN corepack enable
-RUN corepack prepare --activate 
-
-WORKDIR $APP_DIR/dist
+# keep tthis after `COPY` to prevent it from caching
+RUN pnpm clean
 
 WORKDIR $APP_DIR
+RUN pnpm run build
+
 EXPOSE $PORT
-CMD pnpm run start
+CMD pnpm run serve

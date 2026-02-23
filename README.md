@@ -47,6 +47,8 @@ You'll need to setup a database before launching the app, you can either use the
 
 in case of manual setup, you may need to change the db credentials in the .env file.
 
+Change the database host to `localhost` in `apps/easy-generator-backend/.env`
+
 Start the backend by running `pnpm start:be` and `pnpm start:ui`.
 
 The project uses incremential builds and caching mechanisms to speed up the building phases while developing,

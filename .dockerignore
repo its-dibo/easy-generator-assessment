@@ -10,8 +10,8 @@ bazel-out
 *.log
 *.cache
 *.tmp
-.nx/cache
-.nx/workspace-data
+.nx
+.qodo
 **/nest-swagger-metadata.ts
 coverage
 Thumbs.db

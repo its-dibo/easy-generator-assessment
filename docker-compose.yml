@@ -14,7 +14,7 @@ services:
     ports:
       - 5400:5432
     networks:
-      - dibo-network
+      - easy-generator-network
 
   pgAdmin:
     container_name: pgAdmin
@@ -30,7 +30,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
       - ./docker-scripts/pg-admin/servers.json:/pgadmin4/servers.json
     networks:
-      - dibo-network
+      - easy-generator-network
 
   easy-generator-backend:
     container_name: easy-generator-backend
@@ -47,7 +47,7 @@ services:
     ports:
       - 5000:5000
     networks:
-      - dibo-network
+      - easy-generator-network
 
   easy-generator-ui:
     container_name: easy-generator-ui
@@ -62,12 +62,12 @@ services:
     ports:
       - 3000:3000
     networks:
-      - dibo-network
+      - easy-generator-network
 
 volumes:
   postgres-data:
   pgadmin-data:
 
 networks:
-  dibo-network:
+  easy-generator-network:
     driver: bridge

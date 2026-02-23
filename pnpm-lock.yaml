@@ -219,6 +219,9 @@ importers:
       kill-port:
         specifier: ^2.0.1
         version: 2.0.1
+      shx:
+        specifier: ^0.4.0
+        version: 0.4.0
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21

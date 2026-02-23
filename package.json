@@ -43,7 +43,9 @@
     "release:apps": "pnpm release --groups=apps",
     "publish": "nx release publish",
     "publish:libs": "pnpm publish --groups=libs",
-    "publish:apps": "pnpm publish --groups=apps"
+    "publish:apps": "pnpm publish --groups=apps",
+    "start:be": "pnpm run --filter @easy-generator/backend start",
+    "start:ui": "pnpm run --filter @easy-generator/ui start"
   },
   "lint-staged": {
     "*": [
